@@ -3,6 +3,13 @@ import React from 'react'
 import { motion } from 'framer-motion'
 import AccordionGallery from '@/app/components/carousel'
 import DNAHelix from '@/app/components/DNAHelix'
+import DriftWall from '../components/driftwall'
+import WhyWeExistArtwork from '@/app/components/WhyWeExistArtwork'
+const items = [
+    { image: 'https://picsum.photos/id/1015/600/400', title: 'Peaks', href: 'https://example.com/one' },
+    { image: 'https://picsum.photos/id/1025/600/400', title: 'Pup', href: 'https://example.com/two' },
+    { image: 'https://picsum.photos/id/1039/600/400', title: 'Falls', href: 'https://example.com/three' },
+];
 
 function page() {
     const items = [
@@ -21,17 +28,9 @@ function page() {
                 animate={{ x: 0, opacity: 1 }}
                 transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
             >
-                {/* DNA double-helix particle animation fills the whole sidebar */}
-                <div className='absolute inset-0'>
-                    <DNAHelix />
+                <div className='w-full max-w-[360px] lg:w-[400px] xl:w-[450px] lg:flex-shrink-0 h-[600px] lg:h-[800px] mx-auto lg:mx-0'>
+                    <WhyWeExistArtwork />
                 </div>
-
-                {/* Subtle right-edge gradient bridges the seam to the content panel */}
-                <div className='absolute inset-y-0 right-0 w-16 pointer-events-none bg-gradient-to-r from-transparent to-background/60' />
-
-                {/* Top + bottom fades so the helix appears to extend beyond the frame */}
-                <div className='absolute inset-x-0 top-0 h-24 pointer-events-none bg-gradient-to-b from-background to-transparent' />
-                <div className='absolute inset-x-0 bottom-0 h-24 pointer-events-none bg-gradient-to-t from-background to-transparent' />
             </motion.div>
 
             {/* Main content — slides in from the right (slight) and fades */}
@@ -61,13 +60,19 @@ function page() {
                         </div>
                     </div>
                 </header>
-                <section className='w-full px-48 pt-12 z-10 gap-10 flex flex-col gap-3 h-full overflow-y-auto' >
-                    <h1 className='font-sans text-foreground font-bold text-6xl tracking-tight' >Why we Exist?</h1>
-                    <div className='flex flex-col gap-4' >
-                        <p className='w-full' >Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illo dolor sit sint consequatur itaque. Perferendis ducimus dolor quia, id exercitationem, delectus, ipsam amet odit voluptatem optio nostrum laboriosam et quasi veniam aperiam dolore voluptates? Illo.</p>
-                        <p className='w-full text-left' >Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nemo assumenda modi, doloremque placeat soluta officia minus aut voluptate libero obcaecati totam ipsa aliquid neque pariatur magnam debitis iste quod velit laudantium optio enim, excepturi quasi voluptates dolore. Quam consequuntur, voluptatibus deleniti necessitatibus sit dolor ducimus velit natus quidem nihil reiciendis soluta dolorem voluptatum fugit sequi laborum facilis! Amet dicta deleniti, accusamus est necessitatibus laborum in architecto voluptatibus at, hic veritatis iusto repellat ipsum reiciendis. Blanditiis facere eius nostrum illo ea corporis eaque deleniti animi impedit, quae cumque rem. Harum velit similique ab ratione voluptatum facere perferendis numquam, beatae, aliquid debitis laudantium recusandae quaerat at quidem laborum optio placeat est culpa. Ipsam perspiciatis repellat libero accusantium, eum dicta accusamus veniam, dolor, voluptate veritatis porro assumenda molestias quaerat odit nulla! Sit iusto quos corrupti, magni vero nemo! Illum corrupti omnis quis minus eligendi dignissimos dolorem aut praesentium animi voluptas quam autem quisquam eum quia in, aperiam sit odio, et quos facilis, laboriosam sint? Commodi explicabo obcaecati sed. Natus incidunt hic odit vero laboriosam nam cupiditate doloremque. Voluptas, expedita? Neque accusamus, dignissimos aut sint nostrum asperiores! Exercitationem, sed! Totam at</p>
+                <section className='w-full px-8 md:px-16 lg:px-24 xl:px-40 pt-12 z-10 gap-10 flex flex-col h-full overflow-y-auto overflow-x-hidden' >
+                    <div className='flex flex-col lg:flex-row w-full items-start gap-12 lg:gap-20 relative'>
+                        <div className='flex flex-col gap-6 flex-1'>
+                            <h1 className='font-sans text-foreground font-bold text-5xl md:text-6xl tracking-tight' >Why we Exist?</h1>
+                            <div className='flex flex-col gap-4 text-foreground/80 leading-relaxed' >
+                                <p className='w-full' >Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illo dolor sit sint consequatur itaque. Perferendis ducimus dolor quia, id exercitationem, delectus, ipsam amet odit voluptatem optio nostrum laboriosam et quasi veniam aperiam dolore voluptates? Illo.</p>
+                                <p className='w-full text-left' >Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nemo assumenda modi, doloremque placeat soluta officia minus aut voluptate libero obcaecati totam ipsa aliquid neque pariatur magnam debitis iste quod velit laudantium optio enim, excepturi quasi voluptates dolore. Quam consequuntur, voluptatibus deleniti necessitatibus sit dolor ducimus velit natus quidem nihil reiciendis soluta dolorem voluptatum fugit sequi laborum facilis! Amet dicta deleniti, accusamus est necessitatibus laborum in architecto voluptatibus at, hic veritatis iusto repellat ipsum reiciendis. Blanditiis facere eius nostrum illo ea corporis eaque deleniti animi impedit, quae cumque rem. Harum velit similique ab ratione voluptatum facere perferendis numquam, beatae, aliquid debitis laudantium recusandae quaerat at quidem laborum optio placeat est culpa. Ipsam perspiciatis repellat libero accusantium, eum dicta accusamus veniam, dolor, voluptate veritatis porro assumenda molestias quaerat odit nulla! Sit iusto quos corrupti, magni vero nemo! Illum corrupti omnis quis minus eligendi dignissimos dolorem aut praesentium animi voluptas quam autem quisquam eum quia in, aperiam sit odio, et quos facilis, laboriosam sint? Commodi explicabo obcaecati sed. Natus incidunt hic odit vero laboriosam nam cupiditate doloremque. Voluptas, expedita? Neque accusamus, dignissimos aut sint nostrum asperiores! Exercitationem, sed! Totam at</p>
+                            </div>
+                        </div>
+
                     </div>
-                    <div className='mt-20' >
+
+                    <div className='mt-10 mb-20 w-full' >
                         <AccordionGallery
                             items={items}
                             defaultIndex={1}
