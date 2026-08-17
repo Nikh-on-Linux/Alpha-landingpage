@@ -1,33 +1,36 @@
 "use client"
 import Header from './components/header'
 import SpecularButton from './components/button'
+import MedicalParticles from "@/app/components/MedicalParticles"
+import { motion } from 'framer-motion'
 
-import Beams from "@/app/components/Beams"
-
-
-function Homepage() {
+export default function Homepage() {
   return (
-    <main className='w-screen h-screen overflow-hidden flex flex-col items-center justify-center' >
+    <main className='w-full min-h-screen overflow-hidden flex flex-col items-center justify-center relative' >
       <Header />
-      <div className='absolute w-full h-full left-0' >
-        <Beams
-          beamWidth={3}
-          beamHeight={30}
-          beamNumber={20}
-          lightColor="#ffffff"
-          speed={2}
-          noiseIntensity={1.75}
-          scale={0.2}
-          rotation={30}
-        />
-
+      
+      {/* Interactive Medical Particle Background */}
+      <div className='absolute w-full h-full left-0 top-0 overflow-hidden' >
+        <div className="absolute inset-0 z-10 bg-[radial-gradient(ellipse_at_center,transparent_20%,var(--background)_100%)] opacity-90 pointer-events-none" />
+        <MedicalParticles />
       </div>
-      <section className='w-full z-10 h-full flex flex-col items-center justify-center gap-10' >
-        <h1 className='font-sans font-bold text-5xl text-shadow-xl text-shadow-black' >We provide Ai assistant for every doctor in the world.</h1>
-        <div className='flex flex-row items-center gap-10' >
-          {/* <button className='select-none cursor-pointer font-sans text-lg font-medium px-4.5 py-1.5 border-2 border-foreground/10 bg-foreground/20 rounded-full transition-all hover:bg-background/15' >
-            why we exist?
-          </button> */}
+
+      <section className='w-full z-10 h-full flex flex-col items-center justify-center gap-10 px-4' >
+        <motion.h1 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className='font-sans font-medium text-4xl md:text-6xl lg:text-7xl tracking-tighter text-center max-w-5xl leading-[1.1] text-foreground/90' 
+        >
+          We provide <span className="font-bold text-transparent bg-clip-text bg-gradient-to-r from-foreground to-foreground/60 relative inline-block">AI assistants<div className="absolute -bottom-1 left-0 w-full h-[4px] bg-gradient-to-r from-teal-400 to-blue-500 rounded-full shadow-[0_0_15px_rgba(45,212,191,0.5)]" /></span> for <span className="font-bold">every doctor</span> in the world.
+        </motion.h1>
+        
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+          className='flex flex-row items-center gap-10 mt-4' 
+        >
           <SpecularButton
             size="md"
             radius={60}
@@ -49,11 +52,8 @@ function Homepage() {
           >
             Why we exist?
           </SpecularButton>
-
-        </div>
+        </motion.div>
       </section>
     </main>
   )
 }
-
-export default Homepage
