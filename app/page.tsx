@@ -1,18 +1,40 @@
 "use client"
 import Header from './components/header'
 import SpecularButton from './components/button'
-import MedicalParticles from "@/app/components/MedicalParticles"
 import { motion } from 'framer-motion'
+import Image from 'next/image'
 
 export default function Homepage() {
   return (
     <main className='w-full min-h-screen overflow-hidden flex flex-col items-center justify-center relative' >
       <Header />
       
-      {/* Interactive Medical Particle Background */}
-      <div className='absolute w-full h-full left-0 top-0 overflow-hidden' >
-        <div className="absolute inset-0 z-10 bg-[radial-gradient(ellipse_at_center,transparent_20%,var(--background)_100%)] opacity-90 pointer-events-none" />
-        <MedicalParticles />
+      {/* Animated Image Background */}
+      <div className='absolute w-full h-full left-0 top-0 overflow-hidden bg-background' >
+        <motion.div 
+          animate={{
+            y: [-15, 15, -15],
+          }}
+          transition={{
+            duration: 8,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+          className="absolute inset-0 w-full h-full flex items-center justify-center"
+        >
+          <Image 
+            src="/hero-bg.png"
+            alt="Hero Background"
+            fill
+            className="object-contain scale-75 opacity-90"
+            priority
+          />
+        </motion.div>
+        
+        {/* Overlay Effects */}
+        <div className="absolute inset-0 z-10 bg-[radial-gradient(ellipse_at_center,transparent_0%,var(--background)_80%)] opacity-100 pointer-events-none" />
+        <div className="absolute inset-0 z-10 bg-foreground/5 dark:bg-black/20 pointer-events-none mix-blend-overlay" />
+        <div className="absolute inset-0 z-10 bg-gradient-to-b from-transparent via-background/10 to-background pointer-events-none" />
       </div>
 
       <section className='w-full z-10 h-full flex flex-col items-center justify-center gap-10 px-4' >
