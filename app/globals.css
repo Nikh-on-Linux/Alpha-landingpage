@@ -3,6 +3,7 @@
 :root {
   --background: #fafafa;
   --foreground: #09090b;
+  --newforeground: #09090b;
 }
 
 @theme inline {
@@ -24,11 +25,12 @@ body {
   /* Tailwind handles font family automatically now through --font-sans */
 }
 
-.navitem{
+.navitem {
   position: relative;
   overflow: hidden;
 }
-.navitem::after{
+
+.navitem::after {
   content: "";
   width: 0%;
   height: 100%;
@@ -40,6 +42,29 @@ body {
   left: 0;
   z-index: -1;
 }
-.navitem:hover::after{
+
+.navitem:hover::after {
+  width: 100%;
+}
+
+.new {
+  position: relative;
+  overflow: hidden;
+}
+
+.new::after {
+  content: "";
+  width: 0%;
+  height: 100%;
+  border-bottom: 2px solid var(--newforeground);
+  transition: all;
+  transition-duration: 0.3s;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
+.new:hover::after {
   width: 100%;
 }
