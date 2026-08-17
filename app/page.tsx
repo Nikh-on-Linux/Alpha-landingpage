@@ -11,7 +11,7 @@ function Homepage() {
       <Header />
       <div className='absolute w-full h-full left-0' >
         <Beams
-          beamWidth={1}
+          beamWidth={3}
           beamHeight={30}
           beamNumber={20}
           lightColor="#ffffff"
@@ -37,11 +37,11 @@ function Homepage() {
             textColor="#f5f5f5"
             lineColor="#ffffff"
             baseColor="#525252"
-            intensity={0.7}
+            intensity={0.8}
             shineSize={5}
             shineFade={40}
             thickness={1.2}
-            speed={0.35}
+            speed={0.8}
             followMouse
             proximity={190}
             autoAnimate
