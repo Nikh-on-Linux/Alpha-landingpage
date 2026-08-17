@@ -2,8 +2,10 @@
 import Header from './components/header'
 import SpecularButton from './components/button'
 import { motion } from 'framer-motion'
+import { useRouter } from 'next/navigation'
 
 export default function Homepage() {
+  const router = useRouter()
   return (
     <main className='w-full min-h-screen overflow-hidden flex flex-col items-center justify-center relative' >
       <Header />
@@ -55,7 +57,7 @@ export default function Homepage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-          className='flex flex-row items-center gap-10 mt-4' 
+          className='flex flex-row items-center gap-10 mt-4 z-10' 
         >
           <SpecularButton
             size="md"
@@ -74,7 +76,7 @@ export default function Homepage() {
             followMouse
             proximity={190}
             autoAnimate
-            onClick={() => console.log('clicked')}
+            onClick={() => router.push('/why-we-exist')}
           >
             Why we exist?
           </SpecularButton>
