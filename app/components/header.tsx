@@ -1,4 +1,6 @@
-import React from 'react'
+"use client"
+import React from 'react';
+import Link from 'next/link';
 
 function Header() {
     return (
@@ -10,7 +12,7 @@ function Header() {
                     </div>
                     <nav className='hidden md:block'>
                         <ul className='flex flex-row text-sm font-medium items-center gap-6 select-none cursor-pointer' >
-                            <li className='navitem' >Philosophy</li>
+                            <Link href={"/philosophy"} className='navitem' >Philosophy</Link>
                             <li className='navitem' >How it works</li>
                             <li className='navitem'>Contact Us</li>
                         </ul>

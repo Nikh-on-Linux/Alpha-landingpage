@@ -5,6 +5,7 @@ import AccordionGallery from '@/app/components/carousel'
 import DNAHelix from '@/app/components/DNAHelix'
 import DriftWall from '../components/driftwall'
 import WhyWeExistArtwork from '@/app/components/WhyWeExistArtwork'
+import Link from 'next/link'
 const items = [
     { image: 'https://picsum.photos/id/1015/600/400', title: 'Peaks', href: 'https://example.com/one' },
     { image: 'https://picsum.photos/id/1025/600/400', title: 'Pup', href: 'https://example.com/two' },
@@ -45,11 +46,11 @@ function page() {
                     <div className='flex flex-row max-w-7xl w-full items-center justify-between px-6 py-4' >
                         <div className='flex flex-row items-center justify-center gap-8' >
                             <div className='flex-shrink-0' >
-                                <span className='font-sans text-xl md:text-2xl text-foreground font-semibold tracking-tight' >Arogya AI</span>
+                                <Link href={"/"} className='font-sans text-xl md:text-2xl text-foreground font-semibold tracking-tight select-none' >Arogya AI</Link>
                             </div>
                             <nav className='hidden md:block'>
                                 <ul className='flex flex-row text-sm font-medium items-center gap-6 select-none cursor-pointer text-foreground/70' >
-                                    <li className='navitem' >Philosophy</li>
+                                    <Link href={"/philosophy"} className='navitem' >Philosophy</Link>
                                     <li className='navitem' >How it works</li>
                                     <li className='navitem'>Contact Us</li>
                                 </ul>
