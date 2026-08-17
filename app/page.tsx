@@ -2,7 +2,6 @@
 import Header from './components/header'
 import SpecularButton from './components/button'
 import { motion } from 'framer-motion'
-import Image from 'next/image'
 
 export default function Homepage() {
   return (
@@ -22,13 +21,18 @@ export default function Homepage() {
           }}
           className="absolute inset-0 w-full h-full flex items-center justify-center"
         >
-          <Image 
-            src="/hero-bg.png"
-            alt="Hero Background"
-            fill
-            className="object-contain scale-75 opacity-90"
-            priority
-          />
+          <video 
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="auto"
+            className="absolute inset-0 w-full h-full object-cover opacity-80"
+          >
+            <source src="/faded_brain.webm" type="video/webm" />
+            <source src="/faded_brain.mp4" type="video/mp4" />
+          </video>
+          <div className="absolute inset-0 bg-background/60 pointer-events-none z-0" />
         </motion.div>
         
         {/* Overlay Effects */}
