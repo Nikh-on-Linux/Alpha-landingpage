@@ -68,3 +68,27 @@ body {
 .new:hover::after {
   width: 100%;
 }
+
+.inp{
+  position:relative;
+  overflow: hidden;
+}
+
+.inp::after{
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-bottom: 1px solid var(--foreground);
+  width: 100%;
+  height: 100%;
+  transition: all;
+  transition-duration: .2s;
+  z-index: -1;
+  transform: scaleX(0);
+}
+
+.inp:has(input:focus)::after{
+  transform: scaleX(1);
+}
+

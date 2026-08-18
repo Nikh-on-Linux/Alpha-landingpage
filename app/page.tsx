@@ -7,9 +7,8 @@ import { useRouter } from 'next/navigation'
 export default function Homepage() {
   const router = useRouter()
   return (
-    <main className='w-full min-h-screen overflow-hidden flex flex-col items-center justify-center relative' >
-      <Header />
-      
+    <main className='w-full min-h-screen overflow-hidden flex flex-col items-center justify-center relative ' >
+    
       {/* Animated Image Background */}
       <div className='absolute w-full h-full left-0 top-0 overflow-hidden bg-background' >
         <motion.div 
@@ -48,9 +47,9 @@ export default function Homepage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className='font-sans font-medium text-4xl md:text-6xl lg:text-7xl tracking-tighter text-center max-w-5xl leading-[1.1] text-foreground/90' 
+          className='font-sans font-semibold text-4xl md:text-6xl lg:text-7xl tracking-tighter text-center max-w-5xl leading-[1.1] text-foreground/90' 
         >
-          We provide <span className="font-bold text-transparent bg-clip-text bg-gradient-to-r from-foreground to-foreground/60 relative inline-block">AI assistants<div className="absolute -bottom-1 left-0 w-full h-[4px] bg-gradient-to-r from-teal-400 to-blue-500 rounded-full shadow-[0_0_15px_rgba(45,212,191,0.5)]" /></span> for <span className="font-bold">every doctor</span> in the world.
+          We provide <span className="font-bold text-transparent bg-clip-text bg-gradient-to-r from-foreground to-foreground/60 relative inline-block">AI assistants</span> for <span className="font-bold">every doctor</span> in the world.
         </motion.h1>
         
         <motion.div 

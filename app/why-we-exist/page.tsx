@@ -1,104 +1,577 @@
-"use client"
-import React from 'react'
-import { motion } from 'framer-motion'
-import AccordionGallery from '@/app/components/carousel'
-import DNAHelix from '@/app/components/DNAHelix'
-import DriftWall from '../components/driftwall'
-import WhyWeExistArtwork from '@/app/components/WhyWeExistArtwork'
-import Link from 'next/link'
-const items = [
-    { image: 'https://picsum.photos/id/1015/600/400', title: 'Peaks', href: 'https://example.com/one' },
-    { image: 'https://picsum.photos/id/1025/600/400', title: 'Pup', href: 'https://example.com/two' },
-    { image: 'https://picsum.photos/id/1039/600/400', title: 'Falls', href: 'https://example.com/three' },
-];
+"use client";
 
-function page() {
-    const items = [
-        { image: 'https://picsum.photos/id/1015/900/1200', label: 'Canyon', link: '#' },
-        { image: 'https://picsum.photos/id/1018/900/1200', label: 'Ridgeline', link: '#' },
-        { image: 'https://picsum.photos/id/1039/900/1200', label: 'Falls', link: '#' },
-        { image: 'https://picsum.photos/id/1043/900/1200', label: 'Harbour', link: '#' },
-        { image: 'https://picsum.photos/id/1044/900/1200', label: 'Skyline', link: '#' }
-    ];
+import { useLayoutEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
+
+/* ============================================================
+   TYPES
+   ============================================================ */
+
+type LayeredImagesProps = {
+    images: string[];
+};
+
+
+/* ============================================================
+   LAYERED IMAGE COMPONENT
+   ============================================================ */
+
+function LayeredImages({ images }: LayeredImagesProps) {
+    const sectionRef = useRef<HTMLDivElement>(null);
+    const imageRefs = useRef<HTMLDivElement[]>([]);
+
+    useLayoutEffect(() => {
+        const section = sectionRef.current;
+
+        if (!section) return;
+
+        const ctx = gsap.context(() => {
+            const cards = imageRefs.current;
+
+            if (!cards.length) return;
+
+            /*
+             * Initial arrangement.
+             *
+             * The cards overlap, but each one has enough
+             * offset that it remains visible.
+             */
+
+            gsap.set(cards[0], {
+                x: -45,
+                y: -80,
+                rotate: -5,
+                scale: 1,
+                zIndex: 3,
+            });
+
+            if (cards[1]) {
+                gsap.set(cards[1], {
+                    x: 45,
+                    y: 0,
+                    rotate: 4,
+                    scale: 0.98,
+                    zIndex: 2,
+                });
+            }
+
+            if (cards[2]) {
+                gsap.set(cards[2], {
+                    x: -15,
+                    y: 85,
+                    rotate: -2,
+                    scale: 0.96,
+                    zIndex: 1,
+                });
+            }
+
+            /*
+             * Scroll-driven movement.
+             *
+             * We intentionally keep the movement subtle.
+             * The images should feel layered rather than
+             * flying apart.
+             */
+
+            const timeline = gsap.timeline({
+                scrollTrigger: {
+                    trigger: section,
+
+                    /*
+                     * The animation begins when the image
+                     * section enters the viewport.
+                     */
+                    start: "top bottom",
+
+                    /*
+                     * Animation finishes when the section
+                     * is almost completely out of view.
+                     */
+                    end: "bottom top",
+
+                    /*
+                     * Scroll controls the animation.
+                     */
+                    scrub: 1,
+
+                    /*
+                     * Recalculate positions if needed.
+                     */
+                    invalidateOnRefresh: true,
+                },
+            });
+
+            /*
+             * TOP IMAGE
+             */
+
+            timeline.to(
+                cards[0],
+                {
+                    x: -95,
+                    y: -125,
+                    rotate: -8,
+                    scale: 1.03,
+                    ease: "none",
+                },
+                0
+            );
+
+            /*
+             * MIDDLE IMAGE
+             */
+
+            if (cards[1]) {
+                timeline.to(
+                    cards[1],
+                    {
+                        x: 95,
+                        y: 15,
+                        rotate: 7,
+                        scale: 1,
+                        ease: "none",
+                    },
+                    0
+                );
+            }
+
+            /*
+             * BOTTOM IMAGE
+             */
+
+            if (cards[2]) {
+                timeline.to(
+                    cards[2],
+                    {
+                        x: -30,
+                        y: 125,
+                        rotate: -5,
+                        scale: 0.99,
+                        ease: "none",
+                    },
+                    0
+                );
+            }
+        }, section);
+
+        return () => {
+            ctx.revert();
+        };
+    }, []);
+
     return (
-        <main className='w-screen h-screen overflow-hidden flex flex-row' >
-            {/* Sidebar — slides in from the left on mount */}
-            <motion.div
-                className='relative flex-shrink-0 w-[20rem] h-full bg-background overflow-hidden'
-                initial={{ x: -320, opacity: 0 }}
-                animate={{ x: 0, opacity: 1 }}
-                transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
-            >
-                <div className='w-full max-w-[360px] lg:w-[400px] xl:w-[450px] lg:flex-shrink-0 h-[600px] lg:h-[800px] mx-auto lg:mx-0'>
-                    <WhyWeExistArtwork />
+        <div
+            ref={sectionRef}
+            className="relative h-full w-full"
+        >
+            {/* Image viewport */}
+
+            <div className="sticky top-0 flex h-screen w-full items-center justify-center">
+
+                <div className="relative h-[38rem] w-[32rem] max-w-full">
+
+                    {images.map((src, index) => (
+                        <div
+                            key={`${src}-${index}`}
+                            ref={(element) => {
+                                if (element) {
+                                    imageRefs.current[index] = element;
+                                }
+                            }}
+                            className="
+                                absolute
+                                left-1/2
+                                top-1/2
+                                w-[24rem]
+                                -translate-x-1/2
+                                -translate-y-1/2
+                                overflow-hidden
+                                rounded-2xl
+                                bg-neutral-200
+                                shadow-2xl
+                                will-change-transform
+                            "
+                        >
+                            <img
+                                src={src}
+                                alt=""
+                                draggable={false}
+                                className="
+                                    block
+                                    h-auto
+                                    w-full
+                                    select-none
+                                    object-cover
+                                "
+                            />
+                        </div>
+                    ))}
+
                 </div>
-            </motion.div>
 
-            {/* Main content — slides in from the right (slight) and fades */}
-            <motion.section
-                className='relative w-full h-full overflow-x-hidden overflow-y-hidden flex flex-col'
-                style={{ backgroundColor: '#050505' }}
-                initial={{ x: 40, opacity: 0 }}
-                animate={{ x: 0, opacity: 1 }}
-                transition={{ duration: 0.65, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
-            >
-                <header className='w-full top-0 left-0 z-50 flex items-center justify-center pt-1 px-4' >
-                    <div className='flex flex-row max-w-7xl w-full items-center justify-between px-6 py-4' >
-                        <div className='flex flex-row items-center justify-center gap-8' >
-                            <div className='flex-shrink-0' >
-                                <Link href={"/"} className='font-sans text-xl md:text-2xl text-foreground font-semibold tracking-tight select-none' >Arogya AI</Link>
-                            </div>
-                            <nav className='hidden md:block'>
-                                <ul className='flex flex-row text-sm font-medium items-center gap-6 select-none cursor-pointer text-foreground/70' >
-                                    <Link href={"/philosophy"} className='navitem' >Philosophy</Link>
-                                    <li className='navitem' >How it works</li>
-                                    <li className='navitem'>Contact Us</li>
-                                </ul>
-                            </nav>
-                        </div>
-                        <div>
-                            <button className='bg-foreground text-background text-sm font-medium px-5 py-2 cursor-pointer transition-all hover:bg-foreground/85 rounded-full' >Apply</button>
-                        </div>
-                    </div>
-                </header>
-                <section className='w-full px-8 md:px-16 lg:px-24 xl:px-40 pt-12 z-10 gap-10 flex flex-col h-full overflow-y-auto overflow-x-hidden' >
-                    <div className='flex flex-col lg:flex-row w-full items-start gap-12 lg:gap-20 relative'>
-                        <div className='flex flex-col gap-6 flex-1'>
-                            <h1 className='font-sans text-foreground font-bold text-5xl md:text-6xl tracking-tight' >Why we Exist?</h1>
-                            <div className='flex flex-col gap-4 text-foreground/80 leading-relaxed' >
-                                <p className='w-full' >Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illo dolor sit sint consequatur itaque. Perferendis ducimus dolor quia, id exercitationem, delectus, ipsam amet odit voluptatem optio nostrum laboriosam et quasi veniam aperiam dolore voluptates? Illo.</p>
-                                <p className='w-full text-left' >Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nemo assumenda modi, doloremque placeat soluta officia minus aut voluptate libero obcaecati totam ipsa aliquid neque pariatur magnam debitis iste quod velit laudantium optio enim, excepturi quasi voluptates dolore. Quam consequuntur, voluptatibus deleniti necessitatibus sit dolor ducimus velit natus quidem nihil reiciendis soluta dolorem voluptatum fugit sequi laborum facilis! Amet dicta deleniti, accusamus est necessitatibus laborum in architecto voluptatibus at, hic veritatis iusto repellat ipsum reiciendis. Blanditiis facere eius nostrum illo ea corporis eaque deleniti animi impedit, quae cumque rem. Harum velit similique ab ratione voluptatum facere perferendis numquam, beatae, aliquid debitis laudantium recusandae quaerat at quidem laborum optio placeat est culpa. Ipsam perspiciatis repellat libero accusantium, eum dicta accusamus veniam, dolor, voluptate veritatis porro assumenda molestias quaerat odit nulla! Sit iusto quos corrupti, magni vero nemo! Illum corrupti omnis quis minus eligendi dignissimos dolorem aut praesentium animi voluptas quam autem quisquam eum quia in, aperiam sit odio, et quos facilis, laboriosam sint? Commodi explicabo obcaecati sed. Natus incidunt hic odit vero laboriosam nam cupiditate doloremque. Voluptas, expedita? Neque accusamus, dignissimos aut sint nostrum asperiores! Exercitationem, sed! Totam at</p>
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <div className='mt-10 mb-20 w-full' >
-                        <AccordionGallery
-                            items={items}
-                            defaultIndex={1}
-                            expandRatio={0.52}
-                            trigger="hover"
-                            accentColor="#ffffff"
-                            overlayColor="#060010"
-                            textColor="#ffffff"
-                            grayscale
-                            showLabels
-                            duration={0.6}
-                            ease="power3.out"
-                            parallax={0.5}
-                            tilt={8}
-                            stagger={0.06}
-                            height={460}
-                            gap={10}
-                            radius={12}
-                            orientation="horizontal"
-                        />
-                    </div>
-                </section>
-            </motion.section>
-        </main>
-    )
+            </div>
+        </div>
+    );
 }
 
-export default page
+
+/* ============================================================
+   BLOG SECTION
+   ============================================================ */
+
+type BlogSectionProps = {
+    title: string;
+    paragraphs: string[];
+    images: string[];
+    reverse?: boolean;
+};
+
+function BlogSection({
+    title,
+    paragraphs,
+    images,
+    reverse = false,
+}: BlogSectionProps) {
+    return (
+        <section
+            className="
+                relative
+                min-h-[180vh]
+                bg-foreground
+                text-background
+            "
+        >
+            <div
+                className={`
+                    mx-auto
+                    grid
+                    min-h-[180vh]
+                    max-w-7xl
+                    grid-cols-1
+                    gap-16
+                    px-8
+                    lg:grid-cols-2
+                    lg:gap-20
+                    ${reverse ? "lg:[&>*:first-child]:order-2" : ""}
+                `}
+            >
+
+                {/* ================================================= */}
+                {/* TEXT                                               */}
+                {/* ================================================= */}
+
+                <div className="relative">
+
+                    <div className="sticky top-0 flex min-h-screen items-center">
+
+                        <div className="max-w-xl py-20">
+
+                            <h2
+                                className="
+                                    font-inter
+                                    text-4xl
+                                    font-bold
+                                    leading-[1.05]
+                                    tracking-tight
+                                    sm:text-5xl
+                                    lg:text-6xl
+                                "
+                            >
+                                {title}
+                            </h2>
+
+                            <div
+                                className="
+                                    mt-10
+                                    max-w-lg
+                                    space-y-7
+                                    text-lg
+                                    leading-relaxed
+                                    opacity-80
+                                    sm:text-xl
+                                "
+                            >
+                                {paragraphs.map((paragraph, index) => (
+                                    <p key={index}>
+                                        {paragraph}
+                                    </p>
+                                ))}
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                {/* ================================================= */}
+                {/* IMAGES                                             */}
+                {/* ================================================= */}
+
+                <div className="relative">
+
+                    <LayeredImages images={images} />
+
+                </div>
+
+            </div>
+        </section>
+    );
+}
+
+
+/* ============================================================
+   PAGE
+   ============================================================ */
+
+export default function Page() {
+    const introRef = useRef<HTMLDivElement>(null);
+    const introBoxRef = useRef<HTMLDivElement>(null);
+    const introTitleRef = useRef<HTMLHeadingElement>(null);
+
+    /* ==========================================================
+       INTRO GSAP ANIMATION
+       ========================================================== */
+
+    useLayoutEffect(() => {
+        const intro = introRef.current;
+        const box = introBoxRef.current;
+        const title = introTitleRef.current;
+
+        if (!intro || !box || !title) return;
+
+        const ctx = gsap.context(() => {
+            const timeline = gsap.timeline({
+                scrollTrigger: {
+                    trigger: intro,
+
+                    /*
+                     * Keep the entire intro locked to the
+                     * viewport while the box expands.
+                     */
+                    pin: true,
+
+                    start: "top top",
+
+                    /*
+                     * Increase this number if you want
+                     * a slower expansion.
+                     */
+                    end: "+=1200",
+
+                    scrub: 1,
+
+                    anticipatePin: 1,
+
+                    invalidateOnRefresh: true,
+                },
+            });
+
+            /*
+             * Expand the white card.
+             */
+
+            timeline.to(
+                box,
+                {
+                    width: "100vw",
+                    height: "100vh",
+                    borderRadius: "0rem",
+                    ease: "none",
+                },
+                0
+            );
+
+            /*
+             * Slowly disappear the heading toward the
+             * end of the transition.
+             */
+
+            timeline.to(
+                title,
+                {
+                    opacity: 0,
+                    scale: 0.9,
+                    ease: "none",
+                },
+                0.65
+            );
+        }, intro);
+
+        return () => {
+            ctx.revert();
+        };
+    }, []);
+
+
+    /* ==========================================================
+       RENDER
+       ========================================================== */
+
+    return (
+        <main className="w-full overflow-x-hidden bg-black">
+
+            {/* ================================================== */}
+            {/* WHY WE EXIST INTRO                                  */}
+            {/* ================================================== */}
+
+            <section
+                ref={introRef}
+                className="
+                    relative
+                    h-screen
+                    w-full
+                    bg-black
+                "
+            >
+
+                <div
+                    className="
+                        flex
+                        h-screen
+                        w-full
+                        items-center
+                        justify-center
+                    "
+                >
+
+                    <div
+                        ref={introBoxRef}
+                        className="
+                            flex
+                            items-center
+                            justify-center
+                            overflow-hidden
+                            bg-foreground
+                        "
+                        style={{
+                            width: "50rem",
+                            height: "30rem",
+                            borderRadius: "2rem",
+                        }}
+                    >
+
+                        <h1
+                            ref={introTitleRef}
+                            className="
+                                whitespace-nowrap
+                                font-inter
+                                text-5xl
+                                font-bold
+                                text-background
+                                sm:text-6xl
+                                lg:text-7xl
+                            "
+                        >
+                            Why We Exist?
+                        </h1>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            {/* ================================================== */}
+            {/* BLOG                                                */}
+            {/* ================================================== */}
+
+            <div className="bg-foreground">
+
+
+                {/* ================================================= */}
+                {/* SECTION 1                                         */}
+                {/* ================================================= */}
+
+                <BlogSection
+                    title="Doctors spend a lot of time searching through patient history."
+                    paragraphs={[
+                        "Healthcare is filled with information, decisions, and processes that demand more time than doctors actually have.",
+                        "We let doctors give more time to the patient by providing all the context relevant to the case directly on the doctor's dashboard.",
+                    ]}
+                    images={[
+                        "/S11.png",
+                        "/S12.png",
+                        "/S13.png",
+                    ]}
+                />
+
+
+                {/* ================================================= */}
+                {/* SECTION 2                                         */}
+                {/* ================================================= */}
+
+                <BlogSection
+                    title="The information doctors need is scattered everywhere."
+                    paragraphs={[
+                        "Patient information can exist across reports, prescriptions, previous consultations, laboratory results, and other clinical records.",
+                        "Arogya AI brings the relevant information together so doctors can focus on understanding the patient instead of searching for information.",
+                    ]}
+                    images={[
+                        "/S21.png",
+                        "/S22.png",
+                        "/S23.png",
+                    ]}
+                    reverse
+                />
+
+
+                {/* ================================================= */}
+                {/* SECTION 3                                         */}
+                {/* ================================================= */}
+
+                <BlogSection
+                    title="Technology should assist doctors, not get in their way."
+                    paragraphs={[
+                        "The goal isn't to replace the doctor's judgment. It is to reduce the repetitive work surrounding it.",
+                        "Arogya AI is designed to work alongside doctors and surface the information they need when they need it.",
+                    ]}
+                    images={[
+                        "/S31.png",
+                        "/S32.png",
+                        "/S33.png",
+                    ]}
+                />
+
+
+                {/* ================================================= */}
+                {/* END                                                */}
+                {/* ================================================= */}
+
+                <section
+                    className="
+                        flex
+                        min-h-screen
+                        items-center
+                        justify-center
+                        px-8
+                    "
+                >
+
+                    <h2
+                        className="
+                            max-w-4xl
+                            text-center
+                            font-inter
+                            text-5xl
+                            font-bold
+                            tracking-tight
+                            sm:text-6xl
+                        "
+                    >
+                        Healthcare should give doctors more time
+                        to care for people.
+                    </h2>
+
+                </section>
+
+            </div>
+
+        </main>
+    );
+}
