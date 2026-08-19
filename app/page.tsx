@@ -1,5 +1,4 @@
 "use client"
-import Header from './components/header'
 import SpecularButton from './components/button'
 import { motion } from 'framer-motion'
 import { useRouter } from 'next/navigation'
@@ -9,8 +8,8 @@ export default function Homepage() {
   return (
     <main className='w-full min-h-screen overflow-hidden flex flex-col items-center justify-center relative ' >
     
-      {/* Animated Image Background */}
-      <div className='absolute w-full h-full left-0 top-0 overflow-hidden bg-background' >
+      {/* Animated Image Background - Fixed to cover footer perfectly */}
+      <div className='fixed w-full h-full left-0 top-0 overflow-hidden bg-background -z-10' >
         <motion.div 
           animate={{
             y: [-15, 15, -15],
@@ -42,15 +41,24 @@ export default function Homepage() {
         <div className="absolute inset-0 z-10 bg-gradient-to-b from-transparent via-background/10 to-background pointer-events-none" />
       </div>
 
-      <section className='w-full z-10 h-full flex flex-col items-center justify-center gap-10 px-4' >
+      <section className='w-full z-10 h-full flex flex-col items-center justify-center gap-8 px-6 md:px-12' >
         <motion.h1 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className='font-sans font-semibold text-4xl md:text-6xl lg:text-7xl tracking-tighter text-center max-w-5xl leading-[1.1] text-foreground/90' 
+          className='font-sans font-semibold text-4xl md:text-6xl lg:text-7xl tracking-tighter text-center max-w-5xl leading-[1.2] md:leading-[1.1] text-foreground/90' 
         >
-          We provide <span className="font-bold text-transparent bg-clip-text bg-gradient-to-r from-foreground to-foreground/60 relative inline-block">AI assistants</span> for <span className="font-bold">every doctor</span> in the world.
+          We provide <span className="font-bold text-transparent bg-clip-text bg-gradient-to-r from-foreground to-foreground/60 relative inline-block">AI assistants</span><br className="hidden md:block" /> for <span className="font-bold">every doctor</span> in the world.
         </motion.h1>
+
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+          className="text-foreground/60 text-center max-w-2xl text-lg md:text-xl font-light leading-relaxed"
+        >
+          Empowering medical professionals with intelligent tools to reduce administrative burden and focus on what matters most: patient care.
+        </motion.p>
         
         <motion.div 
           initial={{ opacity: 0, y: 20 }}

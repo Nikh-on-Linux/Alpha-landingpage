@@ -1,42 +1,55 @@
 "use client"
 import React from 'react'
-import Header from '../components/header'
-import Link from 'next/link'
 import Input from '../components/Input'
+import { motion } from 'framer-motion'
+import SmoothScroll from '../components/SmoothScroll'
 
-function Page() {
+export default function ApplyPage() {
     return (
-        <main className='w-screen h-screen overflow-hidden flex flex-col items-center' >
-            <header className='w-full z-50 flex items-center justify-center pt-4 px-4' >
-                <div className='flex flex-row max-w-7xl w-full items-center justify-between px-6 py-4' >
-                    <div className='flex flex-row items-center justify-center gap-8' >
-                        <div className='flex-shrink-0' >
-                            <span className='font-sans text-xl md:text-2xl font-semibold tracking-tight' >Arogya AI</span>
+        <SmoothScroll>
+            <main className='w-full min-h-screen flex flex-col items-center justify-center relative pt-32 pb-16 px-6' >
+                
+                {/* Background ambient effect */}
+                <div className="absolute inset-0 z-0 bg-[radial-gradient(ellipse_at_top,var(--foreground)_0%,transparent_50%)] opacity-[0.03] pointer-events-none" />
+
+                <motion.section 
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, ease: "easeOut" }}
+                    className='z-10 flex flex-col items-center w-full max-w-lg' 
+                >
+                    <div className="text-center mb-12">
+                        <h1 className='font-sans text-3xl md:text-5xl font-bold tracking-tight text-foreground/90' >
+                            Join the Pilot
+                        </h1>
+                        <p className='font-sans text-foreground/60 text-sm md:text-base mt-4 leading-relaxed' >
+                            Apply for early access to our intelligent medical workspace. Partner with us to shape the future of clinical diagnosis.
+                        </p>
+                    </div>
+
+                    <div className='w-full flex flex-col gap-6 bg-background/50 backdrop-blur-xl border border-foreground/10 p-8 rounded-3xl shadow-2xl' >
+                        <div className='flex flex-col md:flex-row items-center gap-6 w-full' >
+                            <Input placeholder='First Name' className="w-full" />
+                            <Input placeholder='Last Name' className="w-full" />
                         </div>
-                        <nav className='hidden md:block'>
-                            <ul className='flex flex-row text-sm font-medium items-center gap-6 select-none cursor-pointer' >
-                                <Link href={"/philosophy"} className='navitem' >Philosophy</Link>
-                                <li className='navitem' >How it works</li>
-                                <li className='navitem'>Contact Us</li>
-                            </ul>
-                        </nav>
+                        <Input placeholder='Email Address' className="w-full" />
+                        <Input placeholder='Medical License Number / Clinic Name' className="w-full" />
+                        
+                        <button className='mt-4 bg-foreground text-background font-semibold text-sm md:text-base px-6 py-4 rounded-xl cursor-pointer hover:scale-[1.02] active:scale-[0.98] transition-all shadow-md' >
+                            Submit Application
+                        </button>
                     </div>
-                </div>
-            </header>
-            <section className='flex flex-col items-center py-12 h-full' >
-                <h1 className='font-sans text-4xl font-bold' >Become one of our early user.</h1>
-                <p className='font-sans text-foreground/70 text-center mt-4 max-w-[470px]' >By applying you will get early access to our product and become a part in further developments.</p>
-                <div className='flex flex-col gap-8 py-24' >
-                    <div className='flex items-center justify-center gap-4' >
-                        <Input placeholder='First Name' />
-                        <Input placeholder='Last Name' />
+
+                    <div className="mt-12 flex flex-col items-center text-center gap-3 font-mono text-xs text-foreground/50">
+                        <span className="uppercase tracking-[0.1em]">Or reach out directly</span>
+                        <div className="flex flex-row items-center gap-4">
+                            <a href="tel:+919561894119" className="hover:text-foreground transition-colors font-bold">+91 9561894119</a>
+                            <span className="text-foreground/20">|</span>
+                            <a href="mailto:info@arogyai.tech" className="hover:text-foreground transition-colors font-bold">info@arogyai.tech</a>
+                        </div>
                     </div>
-                    <Input placeholder='Email' className={"w-full"} />
-                    <button className='bg-foreground text-background border border-foreground px-4 py-2 rounded-full cursor-pointer hover:bg-background hover:text-foreground transition-all' >Apply for Pilot</button>
-                </div>
-            </section>
-        </main>
+                </motion.section>
+            </main>
+        </SmoothScroll>
     )
 }
-
-export default Page
