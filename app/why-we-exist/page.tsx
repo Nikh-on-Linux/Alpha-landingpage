@@ -97,7 +97,7 @@ export default function WhyWeExistPage() {
             x: isMobile ? 0 : '40vw',
             y: isMobile ? '30vh' : '45vh',
             scale: 0.75,
-            opacity: isMobile ? 0 : 0.3,
+            opacity: 0,
             ease: "power3.inOut",
         }, 0);
 
@@ -132,16 +132,16 @@ export default function WhyWeExistPage() {
 
                 {/* Fixed Titles - Centered perfectly with flexbox */}
                 <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-30 flex items-center justify-center gap-4 pointer-events-none w-full">
-                    <div className="title-our text-white uppercase tracking-[0.3em] text-sm md:text-base font-bold font-mono">
+                    <div className="title-our text-white uppercase tracking-[0.3em] text-base md:text-xl font-bold font-mono">
                         Our
                     </div>
-                    <div className="title-philosophy text-white uppercase tracking-[0.3em] text-sm md:text-base font-bold font-mono">
+                    <div className="title-philosophy text-white uppercase tracking-[0.3em] text-base md:text-xl font-bold font-mono z-0">
                         Philosophy
                     </div>
                 </div>
 
                 {/* Scroll Indicator */}
-                <div className="scroll-indicator fixed bottom-12 left-1/2 -translate-x-1/2 text-white/40 uppercase tracking-[0.2em] text-[10px] font-mono z-30 flex flex-col items-center gap-3">
+                <div className="scroll-indicator fixed bottom-12 left-1/2 -translate-x-1/2 text-white/40 uppercase tracking-[0.2em] text-xs font-mono z-30 flex flex-col items-center gap-3">
                     <span>Scroll</span>
                     <div className="w-[1px] h-8 bg-white/20 relative overflow-hidden">
                         <div className="w-full h-1/2 bg-white absolute top-0 left-0 animate-[bounce_2s_infinite]" />
@@ -152,7 +152,7 @@ export default function WhyWeExistPage() {
                 <div className="h-[130vh] w-full"></div>
 
                 {/* The Letter */}
-                <div className="w-full max-w-xl mx-auto px-8 lg:px-0 flex flex-col gap-24 pb-[30vh]">
+                <div className="w-full max-w-2xl mx-auto px-8 lg:px-0 flex flex-col gap-28 pb-[30vh]">
                     {paragraphs.map((para, i) => (
                         <div
                             key={i}
@@ -160,17 +160,17 @@ export default function WhyWeExistPage() {
                             className="w-full flex flex-col relative"
                         >
                             {/* Desktop side label — alternating margins */}
-                            <div className={`hidden lg:block absolute top-0 w-40 text-white/40 uppercase tracking-[0.2em] text-[11px] font-bold font-mono ${i % 2 === 0 ? '-left-48 text-right' : '-right-48 text-left'}`}>
+                            <div className={`hidden lg:block absolute top-0 w-44 text-white/40 uppercase tracking-[0.2em] text-xs md:text-sm font-bold font-mono ${i % 2 === 0 ? '-left-52 text-right' : '-right-52 text-left'}`}>
                                 {para.title}
                             </div>
 
                             {/* Mobile label (above content) */}
-                            <div className="lg:hidden text-white/40 uppercase tracking-[0.2em] text-[10px] font-bold font-mono mb-4">
+                            <div className="lg:hidden text-white/40 uppercase tracking-[0.2em] text-xs font-bold font-mono mb-4">
                                 {para.title}
                             </div>
 
                             {/* Body copy */}
-                            <div className="text-sm sm:text-base leading-[2.0] font-mono font-light">
+                            <div className="text-base sm:text-lg md:text-[19px] leading-[1.9] font-mono font-light">
                                 {para.content}
                             </div>
                         </div>
@@ -178,7 +178,7 @@ export default function WhyWeExistPage() {
                     
                     {/* Next Action */}
                     <div className="w-full flex justify-center mt-12">
-                        <Link href="/how-it-works" className="group flex items-center gap-3 text-white/40 hover:text-white transition-colors text-xs md:text-sm font-mono uppercase tracking-[0.2em] font-bold">
+                        <Link href="/how-it-works" className="group flex items-center gap-3 text-white/40 hover:text-white transition-colors text-sm md:text-base font-mono uppercase tracking-[0.2em] font-bold">
                             See how Arogya AI works
                             <span className="group-hover:translate-x-2 transition-transform">→</span>
                         </Link>

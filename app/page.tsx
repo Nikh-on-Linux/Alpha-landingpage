@@ -29,8 +29,8 @@ export default function Homepage() {
             preload="auto"
             className="absolute inset-0 w-full h-full object-cover opacity-80"
           >
-            <source src="/faded_brain.webm" type="video/webm" />
-            <source src="/faded_brain.mp4" type="video/mp4" />
+            <source src="https://ik.imagekit.io/assetstreamer/faded_brain.webm" type="video/webm" />
+            <source src="https://ik.imagekit.io/assetstreamer/faded_brain.mp4" type="video/mp4" />
           </video>
           <div className="absolute inset-0 bg-background/60 pointer-events-none z-0" />
         </motion.div>

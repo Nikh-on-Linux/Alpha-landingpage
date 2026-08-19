@@ -3,6 +3,7 @@ import React from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import SmoothScroll from '../components/SmoothScroll';
+import VideoPlayer from '../components/VideoPlayer';
 
 export default function HowItWorksPage() {
     return (
@@ -24,16 +25,11 @@ export default function HowItWorksPage() {
                         </h1>
                     </div>
 
-                    {/* Video Placeholder */}
-                    <div className="w-full aspect-video bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center mb-12 shadow-2xl relative overflow-hidden group cursor-pointer">
-                        <div className="absolute inset-0 bg-gradient-to-tr from-white/5 to-transparent pointer-events-none"></div>
-                        <div className="flex flex-col items-center gap-4">
-                            {/* Play button placeholder */}
-                            <div className="w-16 h-16 rounded-full bg-white/10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                                <div className="w-0 h-0 border-t-[10px] border-t-transparent border-l-[16px] border-l-white border-b-[10px] border-b-transparent ml-1"></div>
-                            </div>
-                            <span className="font-mono text-white/40 text-sm tracking-widest uppercase">Video Presentation</span>
-                        </div>
+                    {/* Video Player */}
+                    <div className="w-full mb-12">
+                        <VideoPlayer
+                            src="https://ik.imagekit.io/assetstreamer/video.mp4"
+                        />
                     </div>
 
                     {/* Small Paragraph */}
