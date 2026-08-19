@@ -21,7 +21,7 @@ function Header({ className }: { className?: String }) {
                     </nav>
                 </div>
                 <div>
-                    <button onClick={() => router.push("/apply")} className='bg-foreground text-background text-sm font-medium px-5 py-2 cursor-pointer transition-all hover:bg-foreground/90 rounded-full' >Apply</button>
+                    <button onClick={() => router.push("https://forms.gle/ZcykQ29xW15HQCLh7")} className='bg-foreground text-background text-sm font-medium px-5 py-2 cursor-pointer transition-all hover:bg-foreground/90 rounded-full' >Apply</button>
                 </div>
             </div>
         </header>

@@ -181,15 +181,29 @@ const SpecularButton = ({
     if (!btn || !fx) return;
 
     const dpr = window.devicePixelRatio || 1;
+    const canvas = document.createElement("canvas");
+    const context =
+      canvas.getContext("webgl2") || canvas.getContext("webgl");
 
-    const renderer = new Renderer({
-      alpha: true,
-      premultipliedAlpha: true,
-      antialias: true,
-      dpr,
-    });
+    if (!context) return;
+
+    let renderer: Renderer;
+
+    try {
+      renderer = new Renderer({
+        canvas,
+        alpha: true,
+        premultipliedAlpha: true,
+        antialias: true,
+        dpr,
+      });
+    } catch {
+      return;
+    }
 
     const gl = renderer.gl;
+
+    if (!gl) return;
 
     gl.clearColor(0, 0, 0, 0);
     gl.enable(gl.BLEND);
